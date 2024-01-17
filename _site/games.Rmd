@@ -1,0 +1,70 @@
+---
+title: "2023 Games"
+theme: theme.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r data-prep}
+# cutoff_date <- as.Date("11/05/2005", format = "%m/%d/%Y")
+
+# Create new column using case_when
+tidy_games <- readr::read_csv("tidy-games.csv") |> 
+              dplyr::mutate(week = 0) |> 
+              dplyr::group_by(game_code) |> 
+              tidyr::pivot_wider(
+    id_cols = c(game_code, minutes, stadium_name, duration, week),
+    names_from = home_away,
+    values_from = c(team_name, points, drives),
+    values_fn = list
+  ) |> 
+  dplyr::ungroup() |> 
+  dplyr::select(week, team_name_home, points_home, team_name_away, 
+                points_away, drives_home, drives_away, minutes)
+
+table_games <- tidy_games |> 
+              dplyr::arrange(-minutes) |> 
+  dplyr::mutate(score_sentence = dplyr::if_else(
+      as.numeric(points_home) > as.numeric(points_away), paste0(team_name_home, " ", points_home, ", ", team_name_away, " ", points_away),
+      paste0(team_name_away, " ", points_away, ", ", team_name_home, " ", points_home)
+    )) |> 
+  dplyr::mutate(total_drives = as.numeric(drives_home) + as.numeric(drives_away), 
+                total_points = as.numeric(points_home) + as.numeric(points_away)) |> 
+  dplyr::select(week, score_sentence, total_drives, total_points, minutes) |> dplyr::arrange(-minutes)
+  
+```
+
+<br>
+
+<!-- <div class="l-page school-table"> -->
+```{r games-table, layout="l-body-outset", out.height="510px"}
+table_games |> 
+  dplyr::select(
+    `Week` = week,
+    `Result` = score_sentence,
+    `Drives` = total_drives,
+    `Points` = total_points,
+    `Mins` = minutes
+    ) |> 
+    reactable::reactable(
+    searchable = TRUE,
+    showPageSizeOptions = TRUE,
+    striped = TRUE,
+    highlight = TRUE,
+    defaultColDef = reactable::colDef(maxWidth = 80,),
+    columns = list(
+      Result = reactable::colDef(
+        maxWidth = 1000)
+      )
+  )
+```
+
+<!-- </div> -->
+
+```{css}
+d-title, d-byline {
+  display: none
+}
+```

@@ -1,0 +1,15 @@
+name: "fbslogs"
+title: "FBS logs"
+description: |
+  FBS logs
+output_dir: "."
+base_url: https://fbs-logs.blessyourchart.com
+navbar:
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "Games"
+      href: games.html
+    - text: "About"
+      href: about.html
+output: distill::distill_article

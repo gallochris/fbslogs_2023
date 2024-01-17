@@ -1,0 +1,34 @@
+{
+  "articles": [
+    {
+      "path": "about.html",
+      "title": "About this site",
+      "author": [],
+      "contents": "\nThis site tracks the duration of 2023 FBS college football games.\nThe goal is to track the duration of games and surface pace of play data. This data can be used to analyze recent rule changes.\nData sources\nThe data used on this site is provided by SportSource Analytics. You can find similar data by purchasing one of the data packages.\nHistorical data is corroborated using cfbfastR, stats.ncaa.org, and collegefootballdata.com.\nData definitions\nduration of games are listed in minutes, and includes games between at least one FBS team\nif a game includes a weather delay, it’s at the discretion of the scorekeeper if the delay is included in the duration\nfor example, Miami (OH) and UMass played a 410 minute game, however, there was a five hour delay\n\ncombined plays only tracks total offensive plays, so rushing and passing attempts, for games between two FBS teams.\nplay data does not include other play types (kickoff, punts, field goals, etc. )\n\ncombined drives includes all raw data and any “garbage” time drives for games between two FBS teams\nHow this site was built\nThis website was built by me, Chris Gallo. I write a weekly newsletter, Bless your chart, about college sports. If you have any questions, please send me an email.\nThe site is built using the Distill framework. All data manipulation is done using R programming language.\n\n\n\n\n\n",
+      "last_modified": "2024-01-10T13:46:29-05:00"
+    },
+    {
+      "path": "games.html",
+      "title": "2023 Games",
+      "author": [],
+      "contents": "\n\n\nThis table lists all 910 games played featuring at least one FBS team during the 2023 season. The table includes the score, combined drives, and combined plays for each game.\n\n\n\n\n\nWeek\n\n\n\n\n\n\n\n\n\n\n\n\nDuration and Drives\n\n\n\n\n\nWeek\n\n\n\n\n\n\n\n\n\n\n\n\nDuration and Plays\n\n\n\n\n\nWeek\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+      "last_modified": "2024-01-10T13:46:35-05:00"
+    },
+    {
+      "path": "index.html",
+      "title": "Home",
+      "description": "Tracking the game duration of 2023 college football games.",
+      "author": [],
+      "contents": "\n\n\n792 games have been played between FBS teams during the 2023 college football season.\nOffenses are averaging 66.8 plays per game, a decrease of 1.9 plays from the previous season, and scoring an average of 26.7 points per game or 0.5 fewer points than last season.\nFBS games are featuring an average of 24.1 combined drives, down by 0.4 drives from last season.\nGames with at least one FBS team are lasting 3 hours and 23 minutes on average, four fewer minutes than last season.\n\n\n\n\nAverages\n\n\n2022\n\n\n2023\n\n\nPlays\n\n\n68.7\n\n\n66.8\n\n\nPoints\n\n\n27.2\n\n\n26.7\n\n\nDrives\n\n\n24.5\n\n\n24.1\n\n\nDuration\n\n\n207\n\n\n203\n\n\n\nAll 2023 games ⟶\nFBS teams ⟶\nAbout this site ⟶\n\n\n\n\n\nAverages week-by-week for 2023 season\n    Average combined drives, offensive plays, and points. This includes games with at least one FBS team.\n    Week\n      Games\n      Drives\n      Points\n      Plays\n      Minutes\n    0\n7\n22.0\n52.3\n126.4\n204.11\n87\n24.0\n54.1\n131.9\n205.62\n85\n24.0\n55.0\n132.9\n209.73\n75\n24.1\n52.9\n131.4\n201.64\n67\n24.2\n53.4\n134.3\n201.85\n59\n24.1\n57.2\n133.2\n202.06\n51\n24.7\n55.1\n135.6\n203.27\n55\n24.3\n52.8\n136.0\n204.78\n54\n24.2\n46.6\n135.4\n201.29\n54\n24.4\n55.2\n134.1\n202.710\n65\n24.3\n52.1\n133.0\n204.011\n65\n24.0\n54.6\n132.3\n199.512\n68\n23.3\n51.9\n131.3\n199.813\n65\n23.6\n58.0\n132.3\n202.014\n10\n25.0\n53.1\n132.3\n205.815\n43\n24.1\n51.4\n131.6\n206.2SportSource Analytics\n    \n\n\n\n\nLast updated Jan 10, 2024\n\n\n\n\n\n\n",
+      "last_modified": "2024-01-10T13:46:38-05:00"
+    },
+    {
+      "path": "teams.html",
+      "title": "2023 FBS Teams",
+      "author": [],
+      "contents": "\n\n\nThis table lists all 133 FBS teams. The table includes:\ntotal number of games\nplays per game\ndrives per game\npoints per game\nminutes per game\nThe data includes “garbage” drives and games against FCS teams.\n\n\n\n\n\n\n\n\n\n",
+      "last_modified": "2024-01-10T13:46:40-05:00"
+    }
+  ],
+  "collections": []
+}

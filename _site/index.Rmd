@@ -1,0 +1,182 @@
+---
+title: "Home"
+description: "Tracking the game duration of 2023 college football games."
+site: distill::distill_website
+theme: theme.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r data-prep}
+# team codes and names
+team_data <- readr::read_csv("team.csv") |> 
+             dplyr::rename(code = `Team Code`, name = Name) |> 
+             dplyr::select(-`Conference Code`)
+
+# team name lookup function 
+team_name_lookup <- function(team_data, team_code) {
+  team_name <- team_data$name[team_data$code == team_code]
+  
+  if (length(team_name) == 0) {
+    return("Team not found")
+  } else {
+    return(as.character(team_name))
+  }
+}
+
+# stadium codes and names
+stadium_data <- readr::read_csv("stadium.csv") |> 
+             dplyr::rename(stadium_code = `Stadium Code`, stadium_name = Name) |>
+             dplyr::select(stadium_code, stadium_name)
+
+# load the game data 
+game_data <- readr::read_csv("game.csv") |> 
+            dplyr::rename(game_code = `Game Code`, 
+                          date = Date,
+                          away = `Visit Team Code`,
+                          home = `Home Team Code`,
+                          stadium_code = `Stadium Code`,
+                          site = Site) |> 
+            tidyr::pivot_longer(cols = c(away, home), names_to = "home_away", values_to = "team_code")  
+              
+
+# load the game statistics
+minutes_data <- readr::read_csv("game-statistics.csv") |> 
+            dplyr::rename(game_code = `Game Code`, 
+                          attendance = Attendance,
+                          minutes = Duration
+                          )
+
+# grab the points 
+points_data <- readr::read_csv("team-game-statistics.csv") |> 
+               dplyr::rename(team_code = `Team Code`,
+                              game_code = `Game Code`,
+                             points = Points) |> 
+               dplyr::select(game_code, team_code, points)
+
+# drives 
+drive_data <- readr::read_csv("drive.csv") |> 
+               dplyr::rename(team_code = `Team Code`,
+                             game_code = `Game Code`,
+                             drive_num = `Drive Number`) |> 
+               dplyr::select(game_code, team_code, drive_num) |> 
+               dplyr::group_by(game_code, team_code) |> 
+               dplyr::summarise(drives = dplyr::n()) |> 
+              dplyr::ungroup()
+```
+
+```{r tidy-game-data}
+# total_game_data 
+total_game_data <- game_data |> 
+    dplyr::group_by(game_code) |> 
+    dplyr::rowwise() |> 
+    dplyr::mutate(team_name = team_name_lookup(team_data, team_code)) |> 
+    dplyr::ungroup() |> 
+    dplyr::select(-site) |> 
+    dplyr::left_join(minutes_data, by = "game_code") |> 
+    dplyr::mutate(hours = floor(minutes / 60),
+                  extra_min = minutes %% 60, 
+                  duration = paste0(hours, " hours ", extra_min, " minutes")) |> 
+  dplyr::filter(!is.na(minutes)) |> 
+  dplyr::arrange(-minutes) |> 
+  dplyr::select(-hours, -extra_min, -attendance) |> 
+  dplyr::left_join(points_data, by = c("game_code", "team_code")) |> 
+  dplyr::left_join(drive_data, by = c("game_code", "team_code")) |> 
+  dplyr::left_join(stadium_data, by = "stadium_code") |> 
+  dplyr::select(game_code, date, stadium_code, stadium_name, home_away, 
+                team_code, team_name, points, drives, minutes, duration)
+
+write.csv(total_game_data, "tidy-games.csv")
+
+```
+
+```{r calc-data}
+total_games <- total_game_data |> 
+               dplyr::distinct(game_code) |> 
+               dplyr::summarise(total = dplyr::n())
+
+avg_duration <- total_game_data |> 
+                dplyr::summarise(avg = round(mean(minutes), 1))
+
+avg_hours <- floor(avg_duration / 60)
+avg_mins <- round(avg_duration %% 60)
+
+short_game <- total_game_data |> 
+                dplyr::summarise(short = min(minutes))
+
+long_game <- total_game_data |> 
+                dplyr::summarise(long = max(minutes))
+
+# update date
+current_date <- Sys.Date()
+
+formatted_date <- format(current_date, "%b %d, %Y")
+
+```
+
+<br>
+<br>
+
+<div class="index-row l-page">
+  <div class = "index-column-l l-page">
+  
+<table class = "key-metric-t" style="width=300;">
+  <tr>
+    <th class = "t-left"></th>
+    <th class = "t-left">2023</th>
+    <th class = "t-right">2022</th>
+  </tr>
+  <tr>
+    <td class = "t-left">Games</td>
+    <td class = "t-right">`r total_games`</td>
+    <td class = "t-right">896</td>
+  </tr>
+  <tr>
+    <td class = "t-left">Avg Duration</td>
+    <td class = "t-right">`r avg_duration` mins</td>
+    <td class = "t-right"> 207 mins</td>
+  </tr>
+  <tr>
+    <td class = "t-left">Avg Plays</td>
+    <td class = "t-right">63.3 plays</td>
+    <td class = "t-right">68.7 plays</td>
+  </tr>
+  
+</table>
+  </div>
+
+  <div class = "index-column-r l-page" style = "font-size:1.2rem;line-height:1.2em;font-family:'IBM Plex Sans', sans-serif;">
+
+A total of <span style = "font-weight:bold;">`r total_games` games</span> have been played between FBS teams during the 2023 college football season. 
+
+The average games duration is <span style = "font-weight:bold;">`r avg_hours` hours and  `r avg_mins` minutes</span>. 
+
+The shortest game was <span style = "font-weight:bold;">`r short_game` minutes</span> and the longest game was <span style = "font-weight:bold;">`r long_game` minutes</span>.
+
+You can a list of all game durations, including the combined drives and points for 2023 games [here](games.html).
+  </div>
+</div>
+
+<br>
+
+<br>
+
+<span style = "font-size:0.9rem;">
+[About the site &#10230;](about.html)
+</span></br>
+    </div>
+  </div>
+</div>
+
+<br>
+<br>
+
+<p style="text-align: center;">*Last updated `r formatted_date`*</p>
+
+```{css}
+d-title, d-byline {
+  display: none
+}
+```

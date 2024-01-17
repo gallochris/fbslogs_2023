@@ -1,0 +1,26 @@
+---
+title: "About this site"
+theme: theme.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+This site tracks the duration of 2023 FBS college football games. It only includes information for games between two FBS teams and only for the 2023 season. 
+
+The goal is to track the duration and surface the data to analyze if there are any changes in game duration due to recent rule changes. 
+
+### Data 
+
+The data used on this site is provided by [SportsSource Analytics](http://sportsourceanalytics.com/) You can find similar data by purchasing one of the [data packages](http://sportsourceanalytics.com/data.html).
+<br>
+The data is often corroborated using [cfbfastR](https://cfbfastr.sportsdataverse.org/index.html) and [stats.ncaa.org](https://stats.ncaa.org/). 
+<br>
+The duration is listed in minutes. The drives include "garbage time" drives, and does not filter out any data.
+
+### How this site was built 
+
+This website was built by me, [Chris Gallo](http://hellogallo.com). I live in Charlotte, NC. Contact me at [chris@hellogallo.com](mailto:chris@hellogallo.com) with any feedback. 
+
+This website uses the [Distill framework for R Markdown](https://rstudio.github.io/distill/). All data manipulation is done using [R programming language](https://www.r-project.org/).

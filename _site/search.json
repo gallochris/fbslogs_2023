@@ -1,0 +1,27 @@
+{
+  "articles": [
+    {
+      "path": "about.html",
+      "title": "About this site",
+      "author": [],
+      "contents": "\nThis site tracks the duration of 2023 FBS college football games. It only includes information for games between two FBS teams and only for the 2023 season.\nThe goal is to track the duration and surface the data to analyze if there are any changes in game duration due to recent rule changes.\nData\nThe data used on this site is provided by SportsSource Analytics You can find similar data by purchasing one of the data packages.\n\nThe data is often corroborated using cfbfastR and stats.ncaa.org.\n\nThe duration is listed in minutes. The drives include “garbage time” drives, and does not filter out any data.\nHow this site was built\nThis website was built by me, Chris Gallo. I live in Charlotte, NC. Contact me at chris@hellogallo.com with any feedback.\nThis website uses the Distill framework for R Markdown. All data manipulation is done using R programming language.\n\n\n\n",
+      "last_modified": "2023-08-27T20:28:51-04:00"
+    },
+    {
+      "path": "games.html",
+      "title": "2023 Games",
+      "author": [],
+      "contents": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+      "last_modified": "2023-08-27T20:25:30-04:00"
+    },
+    {
+      "path": "index.html",
+      "title": "Home",
+      "description": "Tracking the game duration of 2023 college football games.",
+      "author": [],
+      "contents": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n2023\n\n\n2022\n\n\nGames\n\n\n7\n\n\n896\n\n\nAvg Duration\n\n\n204 mins\n\n\n207 mins\n\n\nAvg Plays\n\n\n63.3 plays\n\n\n68.7 plays\n\n\n\nA total of 7 games have been played between FBS teams during the 2023 college football season.\nThe average games duration is 3 hours and 24 minutes.\nThe shortest game was 170 minutes and the longest game was 217 minutes.\nYou can a list of all game durations, including the combined drives and points for 2023 games here.\n\n\n\n\n\nAbout the site ⟶\n\n",
+      "last_modified": "2023-08-27T20:25:12-04:00"
+    }
+  ],
+  "collections": []
+}
